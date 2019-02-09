@@ -240,7 +240,7 @@ class CarState(object):
       self.user_gas = cp.vl["GAS_SENSOR"]['INTERCEPTOR_GAS']
       self.user_gas_pressed = self.user_gas > 0 # this works because interceptor read < 0 when pedal position is 0. Once calibrated, this will change
 
-    self.gear = 0 if self.CP.carFingerprint in (CAR.CIVIC or not self.CP.autoTransmission) else cp.vl["GEARBOX"]['GEAR']
+    self.gear = 0 if self.CP.carFingerprint in CAR.CIVIC or not self.CP.autoTransmission else cp.vl["GEARBOX"]['GEAR']
     self.angle_steers = cp.vl["STEERING_SENSORS"]['STEER_ANGLE']
     self.angle_steers_rate = cp.vl["STEERING_SENSORS"]['STEER_ANGLE_RATE']
 
