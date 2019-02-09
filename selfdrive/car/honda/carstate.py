@@ -65,6 +65,11 @@ def get_can_signals(CP):
       ("SCM_BUTTONS", 25),
   ]
 
+  if CP.autoTransmission:
+    signals += [("GEAR", "GEARBOX", 0),
+                 ("GEAR_SHIFTER", "GEARBOX", 0)]
+    checks += [(("GEARBOX", 100))]
+    
   if CP.radarOffCan:
     # Civic is only bosch to use the same brake message as other hondas.
     if CP.carFingerprint not in (CAR.ACCORDH, CAR.CIVIC_BOSCH):
@@ -94,11 +99,6 @@ def get_can_signals(CP):
                 ("DOOR_OPEN_RR", "DOORS_STATUS", 1),
                 ("WHEELS_MOVING", "STANDSTILL", 1)]
     checks += [("DOORS_STATUS", 3)]
-
-  if CP.carFingerprint not in (CAR.ACCORD_20_MANUAL):
-    signals += [("GEAR_SHIFTER", "GEARBOX", 0),
-                ("GEAR", "GEARBOX", 0)]
-    checks += [("GEARBOX", 100)]
 
   if CP.carFingerprint == CAR.CIVIC:
     signals += [("CAR_GAS", "GAS_PEDAL_2", 0),
