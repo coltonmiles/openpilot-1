@@ -39,7 +39,6 @@ def get_can_signals(CP):
       ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
       ("LEFT_BLINKER", "SCM_FEEDBACK", 0),
       ("RIGHT_BLINKER", "SCM_FEEDBACK", 0),
-      ("GEAR", "GEARBOX", 0),
       ("SEATBELT_DRIVER_LAMP", "SEATBELT_STATUS", 1),
       ("SEATBELT_DRIVER_LATCHED", "SEATBELT_STATUS", 0),
       ("BRAKE_PRESSED", "POWERTRAIN_DATA", 0),
@@ -97,7 +96,8 @@ def get_can_signals(CP):
     checks += [("DOORS_STATUS", 3)]
 
   if CP.carFingerprint not in (CAR.ACCORD_20_MANUAL):
-    signals += [("GEAR_SHIFTER", "GEARBOX", 0)]
+    signals += [("GEAR_SHIFTER", "GEARBOX", 0),
+                ("GEAR", "GEARBOX", 0)]
     checks += [("GEARBOX", 100)]
 
   if CP.carFingerprint == CAR.CIVIC:
