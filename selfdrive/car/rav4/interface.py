@@ -176,6 +176,11 @@ class CarInterface(object):
     ret.events = events
     ret.canMonoTimes = canMonoTimes
 
+    if self.CS.pcm_acc_active:
+      events.append(create_event('buttonEnable', [ET.ENABLE]))
+    else:
+      events.append(create_event('buttonCancel', [ET.USER_DISABLE]))
+
     self.cruise_enabled_prev = ret.cruiseState.enabled
 
     return ret.as_reader()
