@@ -177,11 +177,10 @@ class CarInterface(object):
     ret.canMonoTimes = canMonoTimes
 
     if ret.cruiseState.enabled and not self.cruise_enabled_prev:
-      print "should enable here"
-      events.append(create_event('buttonEnable', [ET.ENABLE]))
-    elif not ret.cruiseState.enabled and self.cruise_enabled_prev:
-      events.append(create_event('buttonCancel', [ET.USER_DISABLE]))
-
+      events.append(create_event('pcmEnable', [ET.ENABLE]))
+    elif not ret.cruiseState.enabled:
+      events.append(create_event('pcmDisable', [ET.USER_DISABLE]))
+      
     self.cruise_enabled_prev = ret.cruiseState.enabled
 
     return ret.as_reader()
