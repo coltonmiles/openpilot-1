@@ -63,7 +63,7 @@ class CarState(object):
     v_wheel = float(np.mean([self.v_wheel_fl, self.v_wheel_fr, self.v_wheel_rl, self.v_wheel_rr]))
 
     self.steer_torque_driver = cp.vl["STEER1"]['WHEEL_TORQUE']
-    self.steer_override = abs(self.steer_torque_driver) > 11
+    self.steer_override = abs(self.steer_torque_driver) > 15
 
     # Kalman filter
     if abs(v_wheel - self.v_ego) > 2.0:  # Prevent large accelerations when car starts at non zero speed
