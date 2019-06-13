@@ -9,7 +9,7 @@ def get_can_parser(CP):
   signals = [
     # sig_name, sig_address, default
     ("WHEEL_SPEED1", "SPEED1", 0),
-    ("CRUISE_INDICATOR", "GAS2", 0),
+    ("CRUISE_ENGAGED", "GAS2", 0),
     ("WHEEL_TORQUE", "STEER1", 0),
   ]
 
@@ -65,8 +65,6 @@ class CarState(object):
     self.steer_torque_driver = cp.vl["STEER1"]['WHEEL_TORQUE']
     self.steer_override = abs(self.steer_torque_driver) > 11
 
-    self.pcm_acc_active = bool(cp.vl["GAS2"]['CRUISE_INDICATOR'])
-
     # Kalman filter
     if abs(v_wheel - self.v_ego) > 2.0:  # Prevent large accelerations when car starts at non zero speed
       self.v_ego_kf.x = [[v_wheel], [0.0]]
@@ -81,7 +79,7 @@ class CarState(object):
     self.angle_steers_rate = 1
     can_gear = 0
     self.gear_shifter = 0
-    self.main_on = bool(cp.vl["GAS2"]['CRUISE_INDICATOR'])
+    self.main_on = bool(cp.vl["GAS2"]['CRUISE_ENGAGED'])
     self.left_blinker_on = 0
     self.right_blinker_on = 0
 
@@ -95,7 +93,7 @@ class CarState(object):
 
     self.user_brake = 0
     self.v_cruise_pcm = 0
-    self.pcm_acc_status = bool(cp.vl["GAS2"]['CRUISE_INDICATOR'])
+    self.pcm_acc_status = bool(cp.vl["GAS2"]['CRUISE_ENGAGED'])
     self.gas_pressed = False
     self.low_speed_lockout = False
     self.brake_lights = False
