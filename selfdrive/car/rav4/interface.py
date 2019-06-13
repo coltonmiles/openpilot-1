@@ -150,6 +150,11 @@ class CarInterface(object):
     ret = car.CarState.new_message()
 
     # speeds
+    ret.vEgo = self.CS.v_ego
+    ret.vEgoRaw = self.CS.v_ego_raw
+    ret.aEgo = self.CS.a_ego
+    ret.yawRate = 0
+
     ret.wheelSpeeds.fl = self.CS.v_wheel_fl
     ret.wheelSpeeds.fr = self.CS.v_wheel_fr
     ret.wheelSpeeds.rl = self.CS.v_wheel_rl
