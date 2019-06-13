@@ -19,6 +19,8 @@ def get_can_parser(CP):
     # ("PCM_CRUISE", 33),
   ]
 
+  return CANParser(DBC[CP.carFingerprint]['pt'], signals, checks, 0, timeout=100)
+
 class CarState(object):
   def __init__(self, CP):
 
