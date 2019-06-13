@@ -93,7 +93,8 @@ class CarState(object):
 
     self.user_brake = 0
     self.v_cruise_pcm = 0
-    self.pcm_acc_status = bool(cp.vl["GAS2"]['CRUISE_ENGAGED'])
+    self.pcm_acc_active = bool(cp.vl["GAS2"]['CRUISE_ENGAGED'])
+    self.pcm_acc_status = self.pcm_acc_active
     self.gas_pressed = False
     self.low_speed_lockout = False
     self.brake_lights = False
