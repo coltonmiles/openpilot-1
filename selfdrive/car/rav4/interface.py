@@ -81,6 +81,7 @@ class CarInterface(object):
 
     #detect the Pedal address
     ret.enableGasInterceptor = False
+    ret.enableCamera = True
 
     # min speed to enable ACC. if car can do stop and go, then set enabling speed
     # to a negative value, so it won't matter.
