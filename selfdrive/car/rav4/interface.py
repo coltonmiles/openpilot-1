@@ -34,7 +34,7 @@ class CarInterface(object):
   @staticmethod
   def calc_accel_override(a_ego, a_target, v_ego, v_target):
     return 1.0
-  
+
   @staticmethod
   def get_params(candidate, fingerprint, vin=""):
 
@@ -55,7 +55,7 @@ class CarInterface(object):
     can_valid, _ = self.cp.update(int(sec_since_boot() * 1e9), True)
     can_rcv_error = not can_valid
 
-    self.CS.update(self.cp, self.cp_cam)
+    self.CS.update(self.cp)
 
     # create message
     ret = car.CarState.new_message()

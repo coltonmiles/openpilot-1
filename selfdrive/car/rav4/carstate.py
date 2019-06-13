@@ -30,7 +30,7 @@ class CarState(object):
     # initialize can parser
     self.car_fingerprint = CP.carFingerprint
 
-  def update(self, cp, cp_cam):
+  def update(self, cp):
     # copy can_valid
     self.can_valid = cp.can_valid
 
