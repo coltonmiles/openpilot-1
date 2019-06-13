@@ -151,11 +151,10 @@ class DriverStatus():
       alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
     elif self.awareness <= self.threshold_prompt:
       # prompt orange alert
-      #alert = 'promptDriverDistracted' if self.monitor_on else 'promptDriverUnresponsive'
-      alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
+      alert = 'promptDriverDistracted' if self.monitor_on else 'promptDriverUnresponsive'
     elif self.awareness <= self.threshold_pre:
       # pre green alert
-      alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
+      alert = 'promptDriverDistracted' if self.monitor_on else 'promptDriverUnresponsive'
       #alert = 'preDriverDistracted' if self.monitor_on else 'preDriverUnresponsive'
     if alert is not None:
       events.append(create_event(alert, [ET.WARNING]))
