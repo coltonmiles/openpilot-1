@@ -45,6 +45,94 @@ class CarInterface(object):
 
     ret.safetyModel = car.CarParams.SafetyModels.noOutput
 
+    # pedal
+    ret.enableCruise = not ret.enableGasInterceptor
+
+    # FIXME: hardcoding honda civic 2016 touring params so they can be used to
+    # scale unknown params for other cars
+    mass_civic = 2923 * CV.LB_TO_KG + std_cargo
+    wheelbase_civic = 2.70
+    centerToFront_civic = wheelbase_civic * 0.4
+    centerToRear_civic = wheelbase_civic - centerToFront_civic
+    rotationalInertia_civic = 2500
+    tireStiffnessFront_civic = 192150
+    tireStiffnessRear_civic = 202500
+
+    ret.steerActuatorDelay = 0.12  # Default delay, Prius has larger delay
+
+    stop_and_go = True
+    ret.safetyParam = 66  # see conversion factor for STEER_TORQUE_EPS in dbc file
+    ret.wheelbase = 2.70
+    ret.steerRatio = 15.00   # unknown end-to-end spec
+    tire_stiffness_factor = 0.6371   # hand-tune
+    ret.mass = 3045 * CV.LB_TO_KG + std_cargo
+
+    ret.lateralTuning.init('indi')
+    ret.lateralTuning.indi.innerLoopGain = 4.0
+    ret.lateralTuning.indi.outerLoopGain = 3.0
+    ret.lateralTuning.indi.timeConstant = 1.0
+    ret.lateralTuning.indi.actuatorEffectiveness = 1.0
+
+    ret.steerActuatorDelay = 0.5
+    ret.steerRateCost = 0.5
+
+    ret.steerRateCost = 1.
+    ret.centerToFront = ret.wheelbase * 0.44
+
+    #detect the Pedal address
+    ret.enableGasInterceptor = False
+
+    # min speed to enable ACC. if car can do stop and go, then set enabling speed
+    # to a negative value, so it won't matter.
+    ret.minEnableSpeed = -1.
+
+    centerToRear = ret.wheelbase - ret.centerToFront
+    # TODO: get actual value, for now starting with reasonable value for
+    # civic and scaling by mass and wheelbase
+    ret.rotationalInertia = rotationalInertia_civic * \
+                            ret.mass * ret.wheelbase**2 / (mass_civic * wheelbase_civic**2)
+
+    # TODO: start from empirically derived lateral slip stiffness for the civic and scale by
+    # mass and CG position, so all cars will have approximately similar dyn behaviors
+    ret.tireStiffnessFront = (tireStiffnessFront_civic * tire_stiffness_factor) * \
+                             ret.mass / mass_civic * \
+                             (centerToRear / ret.wheelbase) / (centerToRear_civic / wheelbase_civic)
+    ret.tireStiffnessRear = (tireStiffnessRear_civic * tire_stiffness_factor) * \
+                            ret.mass / mass_civic * \
+                            (ret.centerToFront / ret.wheelbase) / (centerToFront_civic / wheelbase_civic)
+
+    # no rear steering, at least on the listed cars above
+    ret.steerRatioRear = 0.
+    ret.steerControlType = car.CarParams.SteerControlType.torque
+
+    # steer, gas, brake limitations VS speed
+    ret.steerMaxBP = [16. * CV.KPH_TO_MS, 45. * CV.KPH_TO_MS]  # breakpoints at 1 and 40 kph
+    ret.steerMaxV = [1., 1.]  # 2/3rd torque allowed above 45 kph
+    ret.brakeMaxBP = [5., 20.]
+    ret.brakeMaxV = [1., 0.8]
+
+    ret.openpilotLongitudinalControl = False
+
+    ret.steerLimitAlert = False
+
+    ret.longitudinalTuning.deadzoneBP = [0., 9.]
+    ret.longitudinalTuning.deadzoneV = [0., .15]
+    ret.longitudinalTuning.kpBP = [0., 5., 35.]
+    ret.longitudinalTuning.kiBP = [0., 35.]
+    ret.stoppingControl = False
+    ret.startAccel = 0.0
+
+    if ret.enableGasInterceptor:
+      ret.gasMaxBP = [0., 9., 35]
+      ret.gasMaxV = [0.2, 0.5, 0.7]
+      ret.longitudinalTuning.kpV = [1.2, 0.8, 0.5]
+      ret.longitudinalTuning.kiV = [0.18, 0.12]
+    else:
+      ret.gasMaxBP = [0.]
+      ret.gasMaxV = [0.5]
+      ret.longitudinalTuning.kpV = [3.6, 2.4, 1.5]
+      ret.longitudinalTuning.kiV = [0.54, 0.36]
+
     return ret
 
   # returns a car.CarState
