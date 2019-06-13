@@ -8,7 +8,7 @@ _DTM = 0.1                   # DM runs at 10Hz
 _AWARENESS_TIME = 180        # 3 minutes limit without user touching steering wheels make the car enter a terminal status
 _AWARENESS_PRE_TIME = 20.    # a first alert is issued 20s before expiration
 _AWARENESS_PROMPT_TIME = 5.  # a second alert is issued 5s before start decelerating the car
-_DISTRACTED_TIME = 5.
+_DISTRACTED_TIME = 10.
 _DISTRACTED_PRE_TIME = 3.
 _DISTRACTED_PROMPT_TIME = 1.
 # model output refers to center of cropped image, so need to apply the x displacement offset
@@ -151,10 +151,12 @@ class DriverStatus():
       alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
     elif self.awareness <= self.threshold_prompt:
       # prompt orange alert
-      alert = 'promptDriverDistracted' if self.monitor_on else 'promptDriverUnresponsive'
+      #alert = 'promptDriverDistracted' if self.monitor_on else 'promptDriverUnresponsive'
+      alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
     elif self.awareness <= self.threshold_pre:
       # pre green alert
-      alert = 'preDriverDistracted' if self.monitor_on else 'preDriverUnresponsive'
+      alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
+      #alert = 'preDriverDistracted' if self.monitor_on else 'preDriverUnresponsive'
     if alert is not None:
       events.append(create_event(alert, [ET.WARNING]))
 
