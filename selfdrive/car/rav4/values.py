@@ -2,7 +2,7 @@ from selfdrive.car import dbc_dict
 
 class CAR:
 
-  RAV4_43 = "TOYOTA RAV4 2017"
+  RAV4_43 = "TOYOTA RAV4 2012"
 
 
 FINGERPRINTS = {
@@ -13,5 +13,5 @@ FINGERPRINTS = {
 
 
 DBC = {
-  CAR.RAV4_43: dbc_dict('toyota_rav4_2017_pt_generated', 'toyota_prius_2017_adas'),
+  CAR.RAV4_43: dbc_dict('2012_rav4', ''),
   }
