@@ -148,7 +148,7 @@ class DriverStatus():
     alert = None
     if self.awareness <= 0.:
       # terminal red alert: disengagement required
-      alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
+      #alert = 'driverDistracted' if self.monitor_on else 'driverUnresponsive'
     elif self.awareness <= self.threshold_prompt:
       # prompt orange alert
       alert = 'promptDriverDistracted' if self.monitor_on else 'promptDriverUnresponsive'
