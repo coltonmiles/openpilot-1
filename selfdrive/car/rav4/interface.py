@@ -179,7 +179,7 @@ class CarInterface(object):
     if ret.cruiseState.enabled and not self.cruise_enabled_prev:
       print "should enable here"
       events.append(create_event('buttonEnable', [ET.ENABLE]))
-    else if not ret.cruiseState.enabled and self.cruise_enabled_prev:
+    elif not ret.cruiseState.enabled and self.cruise_enabled_prev:
       events.append(create_event('buttonCancel', [ET.USER_DISABLE]))
 
     self.cruise_enabled_prev = ret.cruiseState.enabled
