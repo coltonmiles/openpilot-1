@@ -33,7 +33,7 @@ class CarInterface(object):
 
     ret = car.CarParams.new_message()
 
-    ret.carName = "GEN43"
+    ret.carName = "rav4"
     ret.carFingerprint = candidate
 
     ret.safetyModel = car.CarParams.SafetyModels.noOutput
