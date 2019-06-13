@@ -160,7 +160,9 @@ class CarInterface(object):
 
     # cruise state
     ret.cruiseState.enabled = self.CS.pcm_acc_active
-
+    ret.cruiseState.speed = 0.
+    ret.cruiseState.available = self.CS.pcm_acc_active
+    ret.cruiseState.speedOffset = 0.
     # events
     events = []
     if not self.CS.can_valid:
@@ -180,7 +182,7 @@ class CarInterface(object):
       events.append(create_event('pcmEnable', [ET.ENABLE]))
     elif not ret.cruiseState.enabled:
       events.append(create_event('pcmDisable', [ET.USER_DISABLE]))
-      
+
     self.cruise_enabled_prev = ret.cruiseState.enabled
 
     return ret.as_reader()
