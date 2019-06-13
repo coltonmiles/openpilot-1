@@ -13,5 +13,5 @@ FINGERPRINTS = {
 
 
 DBC = {
-  CAR.RAV4_43: dbc_dict('rav4_2012'),
+  CAR.RAV4_43: dbc_dict('rav4_2012',''),
   }
