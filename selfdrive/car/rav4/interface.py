@@ -50,7 +50,7 @@ class CarInterface(object):
 
     # FIXME: hardcoding honda civic 2016 touring params so they can be used to
     # scale unknown params for other cars
-    mass_civic = 2923 * CV.LB_TO_KG + std_cargo
+    mass_civic = 2923 * CV.LB_TO_KG
     wheelbase_civic = 2.70
     centerToFront_civic = wheelbase_civic * 0.4
     centerToRear_civic = wheelbase_civic - centerToFront_civic
