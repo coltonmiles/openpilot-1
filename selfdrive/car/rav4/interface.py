@@ -43,7 +43,7 @@ class CarInterface(object):
     ret.carFingerprint = candidate
     ret.carVin = vin
 
-    ret.safetyModel = car.CarParams.SafetyModels.noOutput
+    ret.safetyModel = car.CarParams.SafetyModels.toyota
 
     # pedal
     ret.enableCruise = not ret.enableGasInterceptor
