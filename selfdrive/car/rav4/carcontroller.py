@@ -35,8 +35,7 @@ class CarController(object):
 
     self.packer = CANPacker(dbc_name)
 
-  def update(self, enabled, CS, frame, actuators,
-             pcm_cancel_cmd, hud_alert, audible_alert):
+  def update(self, enabled, CS, frame, actuators):
 
     can_sends = []
 
