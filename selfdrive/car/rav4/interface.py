@@ -28,6 +28,14 @@ class CarInterface(object):
       self.CC = CarController(self.cp.dbc_name, CP.carFingerprint)
 
   @staticmethod
+  def compute_gb(accel, speed):
+    return float(accel) / 3.0
+
+  @staticmethod
+  def calc_accel_override(a_ego, a_target, v_ego, v_target):
+    return 1.0
+  
+  @staticmethod
   def get_params(candidate, fingerprint, vin=""):
 
     ret = car.CarParams.new_message()
