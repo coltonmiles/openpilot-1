@@ -113,7 +113,7 @@ def data_sample(rcv_times, CI, CC, plan_sock, path_plan_sock, thermal, calibrati
     if not controls_allowed and enabled:
       mismatch_counter += 1
     if mismatch_counter >= 2:
-      events.append(create_event('controlsMismatch', [ET.IMMEDIATE_DISABLE]))
+      #events.append(create_event('controlsMismatch', [ET.IMMEDIATE_DISABLE]))
 
   # Driver monitoring
   if dm is not None:
