@@ -12,6 +12,7 @@ from selfdrive.car.honda.carstate import CarState, get_can_parser, get_cam_can_p
 from selfdrive.car.honda.values import CruiseButtons, CAR, HONDA_BOSCH, VISUAL_HUD, CAMERA_MSGS
 from selfdrive.car import STD_CARGO_KG, CivicParams, scale_rot_inertia, scale_tire_stiffness
 from selfdrive.controls.lib.planner import _A_CRUISE_MAX_V_FOLLOWING
+import selfdrive.segmentmarker as m
 
 A_ACC_MAX = max(_A_CRUISE_MAX_V_FOLLOWING)
 
@@ -79,6 +80,7 @@ class CarInterface(object):
     self.last_enable_sent = 0
     self.gas_pressed_prev = False
     self.brake_pressed_prev = False
+    self.button_counter = 0
 
     self.cp = get_can_parser(CP)
     self.cp_cam = get_cam_can_parser(CP)
@@ -465,6 +467,13 @@ class CarInterface(object):
         but = self.CS.prev_cruise_setting
       if but == 1:
         be.type = 'altButton1'
+
+        if self.button_counter:
+          m.mark()
+          self.button_counter = 0
+        else:
+          self.button_counter = self.button_counter + 1
+
       # TODO: more buttons?
       buttonEvents.append(be)
     ret.buttonEvents = buttonEvents

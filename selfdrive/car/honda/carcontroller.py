@@ -6,6 +6,7 @@ from selfdrive.car import create_gas_command
 from selfdrive.car.honda import hondacan
 from selfdrive.car.honda.values import AH, CruiseButtons, CAR
 from selfdrive.can.packer import CANPacker
+import selfdrive.segmentmarker as m
 
 
 def actuator_hystereses(brake, braking, brake_steady, v_ego, car_fingerprint):
