@@ -118,6 +118,7 @@ managed_processes = {
   "gpsd": ("selfdrive/sensord", ["./start_gpsd.py"]),
   "updated": "selfdrive.updated",
   "segmentmarker": "selfdrive.segmentmarker",
+  "homeassistant": "selfdrive.homeassistant"
 }
 daemon_processes = {
   "athenad": "selfdrive.athena.athenad",
@@ -145,6 +146,7 @@ persistent_processes = [
   'uploader',
   'ui',
   'updated',
+  'homeassistant'
 ]
 
 car_started_processes = [
