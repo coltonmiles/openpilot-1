@@ -137,9 +137,7 @@ def send():
   }
   try:
     r = requests.post(API_URL, headers=headers, json=data)
-    if r.status_code == requests.codes.ok:
-      # print "Received by Home Assistant"
-    else:
+    if not r.status_code == requests.codes.ok:
       print "Problem sending. Retry"
   except:
     print "Sending totally failed"
