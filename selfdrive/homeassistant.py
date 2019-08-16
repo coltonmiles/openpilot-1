@@ -4,7 +4,6 @@ from selfdrive import messaging
 from selfdrive.services import service_list
 import requests
 import subprocess
-from common.params import Params
 
 # gpsLocation
 latitude = -1
@@ -17,15 +16,12 @@ car_voltage = -1
 eon_soc = -1
 bat_temp = -1
 
-# store these in /data/params/d/
-# can also move these somewhere else, and replace the params() read code with something else. I'm lazy
-params = Params()
 # To get an auth token for you device, go into HA and click on your avatar (first letter of your username if no picture) to get to your profle, then scroll down to make a long life token. it only appears once, so put it somewhere safe
-AUTH_TOKEN = params.get("HA_auth_token")
+AUTH_TOKEN = ''
 # the url and what you want to call your EON entity. ie, 'https://myhomeassistanturl.com/api/states/eon.chris'
-API_URL = params.get("HA_api_url")
+API_URL = 'https://myhomeassistanturl.com/api/states/eon.chris'
 # where you want to ping before attemtping a send. probably your 'myhomeassistanturl.com' url
-PING_URL = params.get("HA_ping_url")
+PING_URL = 'myhomeassistanturl.com'
 
 # a mode for more frequent reads and sends. my pi had problems with updates every second after several hours. your mileage may vary
 fast_mode = False
