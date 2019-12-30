@@ -127,7 +127,7 @@ CAN_TypeDef *cans[] = {CAN1, CAN2, CAN3};
 uint8_t bus_lookup[] = {0,1,2};
 uint8_t can_num_lookup[] = {0,1,2,-1};
 int8_t can_forwarding[] = {-1,-1,-1,-1};
-uint32_t can_speed[] = {5000, 5000, 5000, 333};
+uint32_t can_speed[] = {1250, 1250, 1250, 333};
 #define CAN_MAX 3U
 
 #define CANIF_FROM_CAN_NUM(num) (cans[num])
@@ -445,4 +445,3 @@ void can_init(uint8_t can_number) {
     process_can(can_number);
   }
 }
-
