@@ -41,7 +41,7 @@ class CarInterface(CarInterfaceBase):
     ret.carName = "mock"
     ret.carFingerprint = candidate
 
-    ret.safetyModel = car.CarParams.SafetyModel.noOutput
+    ret.safetyModel = car.CarParams.SafetyModel.allOutput
     ret.openpilotLongitudinalControl = False
 
     # FIXME: hardcoding honda civic 2016 touring params so they can be used to

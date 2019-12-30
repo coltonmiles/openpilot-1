@@ -502,7 +502,7 @@ def controlsd_thread(sm=None, pm=None, can_sock=None):
   community_feature_disallowed = CP.communityFeature and not community_feature_toggle
   read_only = not car_recognized or not controller_available or CP.dashcamOnly or community_feature_disallowed
   if read_only:
-    CP.safetyModel = car.CarParams.SafetyModel.noOutput
+    CP.safetyModel = car.CarParams.SafetyModel.allOutput
 
   # Write CarParams for radard and boardd safety mode
   params.put("CarParams", CP.to_bytes())
