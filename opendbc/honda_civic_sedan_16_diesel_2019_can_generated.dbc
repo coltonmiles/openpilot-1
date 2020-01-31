@@ -296,9 +296,9 @@ CM_ "honda_civic_sedan_16_diesel_2019_can.dbc starts here"
 
 BO_ 316 GAS_PEDAL_2: 8 XXX
  SG_ CAR_GAS : 39|8@0+ (1,0) [0|255] "" XXX
- SG_ CHECKSUM : 56|4@1+ (1,0) [0|15] "" XXX
  SG_ COUNTER : 61|2@0+ (1,0) [0|3] "" XXX
- 
+ SG_ CHECKSUM : 59|4@0+ (1,0) [0|15] "" XXX
+
 BO_ 419 GEARBOX: 8 XXX
  SG_ GEAR_SHIFTER : 24|8@1+ (1,0) [0|255] "" XXX
  SG_ GEAR : 32|8@1+ (1,0) [0|255] "" XXX
