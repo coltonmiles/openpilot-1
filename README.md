@@ -128,7 +128,7 @@ Supported Cars
 <sup>1</sup>Requires a [panda](https://comma.ai/shop/products/panda-obd-ii-dongle) and open sourced [Hyundai giraffe](https://github.com/commaai/neo/tree/master/giraffe/hyundai), designed for the 2019 Sante Fe; pinout may differ for other Hyundai and Kia models. <br />
 <sup>2</sup>28mph for Camry 4CYL L, 4CYL LE and 4CYL SE which don't have Full-Speed Range Dynamic Radar Cruise Control. <br />
 <sup>3</sup>Requires a [custom connector](https://community.comma.ai/wiki/index.php/Volkswagen#Integration_at_R242_Camera) for the [car harness](https://comma.ai/shop/products/car-harness) <br />
-<sup>7</>2019 1.6L Diesel Sedan has no steering below 12mph. <br />
+<sup>7</sup>2019 1.6L Diesel Sedan has no steering below 12mph. <br />
 
 Community Maintained Cars and Features
 ------
