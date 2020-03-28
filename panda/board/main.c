@@ -726,7 +726,10 @@ void TIM1_BRK_TIM9_IRQ_Handler(void) {
     // set ignition_can to false after 2s of no CAN seen
     if (ignition_can_cnt > 2U) {
       ignition_can = false;
-    };
+    }
+    else {
+      ignition_can = true;
+    }
 
     // on to the next one
     uptime_cnt += 1U;

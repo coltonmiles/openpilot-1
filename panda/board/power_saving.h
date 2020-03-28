@@ -28,7 +28,7 @@ void set_power_save_state(int state) {
       enable = true;
     }
 
-    current_board->enable_can_transcievers(enable);
+    current_board->enable_can_transcievers(true);
 
     // Switch EPS/GPS
     if (enable) {
