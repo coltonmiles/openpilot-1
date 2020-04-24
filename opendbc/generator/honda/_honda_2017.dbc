@@ -191,8 +191,8 @@ BO_ 829 LKAS_HUD: 5 ADAS
  SG_ STEERING_REQUIRED : 8|1@0+ (1,0) [0|1] "" BDY
  SG_ BEEP : 17|2@0+ (1,0) [0|1] "" BDY
  SG_ RDM_PROBLEM : 21|1@0+ (1,0) [0|1] "" BDY
- SG_ RDM_0 : 9|1@0+ (1,0) [0|1] "" BDY
- SG_ RDM_1 : 23|1@0+ (1,0) [0|1] "" XXX
+ SG_ RDM_HUD : 9|1@0+ (1,0) [0|1] "" BDY
+ SG_ RDM_HUD2 : 23|1@0+ (1,0) [0|1] "" XXX
  SG_ RDM_OFF : 27|1@0+ (1,0) [0|1] "" BDY
  SG_ RDM_ON_0 : 20|1@0+ (1,0) [0|1] "" XXX
  SG_ RDM_ON_1 : 28|1@0+ (1,0) [0|1] "" BDY
