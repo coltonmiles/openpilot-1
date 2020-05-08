@@ -898,7 +898,7 @@ DBC = {
   CAR.ACURA_ILX: dbc_dict('acura_ilx_2016_can_generated', 'acura_ilx_2016_nidec'),
   CAR.ACURA_RDX: dbc_dict('acura_rdx_2018_can_generated', 'acura_ilx_2016_nidec'),
   CAR.CIVIC: dbc_dict('honda_civic_touring_2016_can_generated', 'acura_ilx_2016_nidec'),
-  CAR.CIVIC_BOSCH: dbc_dict('honda_civic_hatchback_ex_2017_can_generated', None),
+  CAR.CIVIC_BOSCH: dbc_dict('honda_civic_hatchback_ex_2017_can_generated', None, 'body_2017_honda_civic_hatchback'),
   CAR.CIVIC_BOSCH_DIESEL: dbc_dict('honda_civic_sedan_16_diesel_2019_can_generated', None),
   CAR.CRV: dbc_dict('honda_crv_touring_2016_can_generated', 'acura_ilx_2016_nidec'),
   CAR.CRV_5G: dbc_dict('honda_crv_ex_2017_can_generated', None),
@@ -935,6 +935,29 @@ STEER_THRESHOLD = {
   CAR.PILOT_2019: 1200,
   CAR.RIDGELINE: 1200,
   CAR.INSIGHT: 1200,
+}
+
+SPEED_FACTOR = {
+  CAR.ACCORD: 1.,
+  CAR.ACCORD_15: 1.,
+  CAR.ACCORDH: 1.,
+  CAR.ACURA_ILX: 1.,
+  CAR.ACURA_RDX: 1.,
+  CAR.CIVIC: 1.,
+  CAR.CIVIC_BOSCH: 1.,
+  CAR.CIVIC_BOSCH_DIESEL: 1.,
+  CAR.CRV: 1.025,
+  CAR.CRV_5G: 1.025,
+  CAR.CRV_EU: 1.025,
+  CAR.CRV_HYBRID: 1.025,
+  CAR.FIT: 1.,
+  CAR.HRV: 1.025,
+  CAR.ODYSSEY: 1.,
+  CAR.ODYSSEY_CHN: 1.,
+  CAR.PILOT: 1.,
+  CAR.PILOT_2019: 1.,
+  CAR.RIDGELINE: 1.,
+  CAR.INSIGHT: 1.,
 }
 
 SPEED_FACTOR = {
