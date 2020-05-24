@@ -33,7 +33,6 @@ def get_can_signals(CP):
       ("STEER_TORQUE_SENSOR", "STEER_STATUS", 0),
       ("LEFT_BLINKER", "SCM_FEEDBACK", 0),
       ("RIGHT_BLINKER", "SCM_FEEDBACK", 0),
-      ("GEAR", "GEARBOX", 0),
       ("SEATBELT_DRIVER_LAMP", "SEATBELT_STATUS", 1),
       ("SEATBELT_DRIVER_LATCHED", "SEATBELT_STATUS", 0),
       ("BRAKE_PRESSED", "POWERTRAIN_DATA", 0),
@@ -43,7 +42,6 @@ def get_can_signals(CP):
       ("USER_BRAKE", "VSA_STATUS", 0),
       ("BRAKE_HOLD_ACTIVE", "VSA_STATUS", 0),
       ("STEER_STATUS", "STEER_STATUS", 5),
-      ("GEAR_SHIFTER", "GEARBOX", 0),
       ("PEDAL_GAS", "POWERTRAIN_DATA", 0),
       ("CRUISE_SETTING", "SCM_BUTTONS", 0),
       ("ACC_STATUS", "POWERTRAIN_DATA", 0),
@@ -102,6 +100,11 @@ def get_can_signals(CP):
       checks += [("CRUISE_PARAMS", 10)]
     else:
       checks += [("CRUISE_PARAMS", 50)]
+
+  if CP.transmissionType == car.CarParams.TransmissionType.automatic:
+    signals += [
+        ("GEAR", "GEARBOX", 0),
+        ("GEAR_SHIFTER", "GEARBOX", 0)]
 
   if CP.carFingerprint in (CAR.ACCORD, CAR.ACCORD_15, CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT):
     signals += [("DRIVERS_DOOR_OPEN", "SCM_FEEDBACK", 1)]
@@ -162,7 +165,8 @@ class CarState(CarStateBase):
   def __init__(self, CP):
     super().__init__(CP)
     can_define = CANDefine(DBC[CP.carFingerprint]['pt'])
-    self.shifter_values = can_define.dv["GEARBOX"]["GEAR_SHIFTER"]
+    if CP.transmissionType == car.CarParams.TransmissionType.automatic:
+      self.shifter_values = can_define.dv["GEARBOX"]["GEAR_SHIFTER"]
     self.steer_status_values = defaultdict(lambda: "UNKNOWN", can_define.dv["STEER_STATUS"]["STEER_STATUS"])
 
     self.user_gas, self.user_gas_pressed = 0., 0
@@ -245,8 +249,16 @@ class CarState(CarStateBase):
       self.park_brake = 0  # TODO
       main_on = cp.vl["SCM_BUTTONS"]['MAIN_ON']
 
-    gear = int(cp.vl["GEARBOX"]['GEAR_SHIFTER'])
-    ret.gearShifter = self.parse_gear_shifter(self.shifter_values.get(gear, None))
+    if self.CP.transmissionType != car.CarParams.TransmissionType.manual:
+      gear = int(cp.vl["GEARBOX"]['GEAR_SHIFTER'])
+      ret.gearShifter = self.parse_gear_shifter(self.shifter_values.get(gear, None))
+    else:
+      if cp.vl["GAS_PEDAL_2"]['NEUTRAL']:
+        ret.gearShifter = "neutral"
+      elif cp.vl["GAS_PEDAL_2"]['REVERSE']:
+        ret.gearShifter = "reverse"
+      else:
+        ret.gearShifter = "drive"
 
     self.pedal_gas = cp.vl["POWERTRAIN_DATA"]['PEDAL_GAS']
     # crv doesn't include cruise control
@@ -304,6 +316,11 @@ class CarState(CarStateBase):
     if self.CP.carFingerprint in (CAR.PILOT, CAR.PILOT_2019, CAR.RIDGELINE):
       if ret.brake > 0.05:
         ret.brakePressed = True
+
+    if self.CP.transmissionType == car.CarParams.TransmissionType.manual:
+      ret.clutchPressed = cp.vl["GAS_PEDAL_2"]["CLUTCH_PEDAL"] or cp.vl["GAS_PEDAL_2"]["CLUTCH_PEDAL_2"]
+    else:
+      ret.clutchPressed = False
 
     # TODO: discover the CAN msg that has the imperial unit bit for all other cars
     self.is_metric = not cp.vl["HUD_SETTING"]['IMPERIAL_UNIT'] if self.CP.carFingerprint in (CAR.CIVIC) else False

@@ -542,6 +542,10 @@ EVENTS = {
     ET.NO_ENTRY: NoEntryAlert("Gear not D"),
   },
 
+  EventName.clutchPressed: {
+    ET.NO_ENTRY: NoEntryAlert("Clutch Pedal Pressed"),
+  },
+
   EventName.calibrationInvalid: {
     ET.SOFT_DISABLE: SoftDisableAlert("Calibration Invalid: Reposition Device and Recalibrate"),
     ET.NO_ENTRY: NoEntryAlert("Calibration Invalid: Reposition Device & Recalibrate"),

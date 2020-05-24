@@ -208,6 +208,7 @@ FW_VERSIONS = {
   CAR.ACCORD_15: {
     (Ecu.programmedFuelInjection, 0x18da10f1, None): [
       b'37805-6A0-9620\x00\x00',
+      b'37805-6A0-A070\x00\x00',
       b'37805-6A0-A640\x00\x00',
       b'37805-6A0-A740\x00\x00',
       b'37805-6A0-A840\x00\x00',
@@ -226,6 +227,7 @@ FW_VERSIONS = {
     (Ecu.electricBrakeBooster, 0x18da2bf1, None): [
       b'46114-TVA-A050\x00\x00',
       b'46114-TVA-A060\x00\x00',
+      b'46114-TVA-A080\x00\x00',
       b'46114-TVA-A120\x00\x00',
       b'46114-TVE-H550\x00\x00',
     ],
@@ -234,6 +236,7 @@ FW_VERSIONS = {
       b'78109-TVA-A210\x00\x00',
       b'78109-TVA-A220\x00\x00',
       b'78109-TVA-A310\x00\x00',
+      b'78109-TVA-A420\x00\x00',
       b'78109-TWA-A210\x00\x00',
       b'78109-TVE-H610\x00\x00',
     ],
@@ -796,5 +799,8 @@ SPEED_FACTOR = {
 ECU_FINGERPRINT = {
   Ecu.fwdCamera: [0xE4, 0x194],   # steer torque cmd
 }
+
+# TODO: get this from the car's dbc. there is a possiblity for a future msg conflict with this method
+GEARBOX_MSG = [0x188, 0x191, 0x1a3]
 
 HONDA_BOSCH = [CAR.ACCORD, CAR.ACCORD_15, CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_5G, CAR.CRV_HYBRID, CAR.INSIGHT]
