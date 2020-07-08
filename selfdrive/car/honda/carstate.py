@@ -314,12 +314,14 @@ class CarState(CarStateBase):
     else:
       ret.stockAeb = bool(cp_cam.vl["BRAKE_COMMAND"]["AEB_REQ_1"] and cp_cam.vl["BRAKE_COMMAND"]["COMPUTER_BRAKE"] > 1e-5)
 
+    self.stock_lkas_hud = cp_cam.vl["LKAS_HUD"]
+
     if self.CP.carFingerprint in HONDA_BOSCH:
-      self.stock_hud = False
+      self.stock_acc_hud = False
       ret.stockFcw = False
     else:
       ret.stockFcw = cp_cam.vl["BRAKE_COMMAND"]["FCW"] != 0
-      self.stock_hud = cp_cam.vl["ACC_HUD"]
+      self.stock_acc_hud = cp_cam.vl["ACC_HUD"]
       self.stock_brake = cp_cam.vl["BRAKE_COMMAND"]
 
     if self.CP.carFingerprint in (CAR.CRV_5G, ):
@@ -338,7 +340,12 @@ class CarState(CarStateBase):
 
   @staticmethod
   def get_cam_can_parser(CP):
-    signals = []
+    signals = [("RDM_OFF", "LKAS_HUD", 0),
+               ("RDM_ON", "LKAS_HUD", 0),
+               ("RDM_ON_2", "LKAS_HUD", 0),
+               ("RDM_HUD", "LKAS_HUD", 0),
+               ("RDM_HUD_2", "LKAS_HUD", 0),
+               ("LKAS_READY", "LKAS_HUD", 0)]
 
     if CP.carFingerprint in HONDA_BOSCH:
       signals += [("ACCEL_COMMAND", "ACC_CONTROL", 0),

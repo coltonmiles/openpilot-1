@@ -55,7 +55,7 @@ def create_bosch_supplemental_1(packer, car_fingerprint, idx, has_relay):
   return packer.make_can_msg("BOSCH_SUPPLEMENTAL_1", bus, values, idx)
 
 
-def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, has_relay, stock_hud):
+def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, has_relay, stock_acc_hud, stock_lkas_hud):
   commands = []
   bus_pt = get_pt_bus(car_fingerprint, has_relay)
   bus_lkas = get_lkas_cmd_bus(car_fingerprint, has_relay)
@@ -71,16 +71,21 @@ def create_ui_commands(packer, pcm_speed, hud, car_fingerprint, is_metric, idx, 
       'IMPERIAL_UNIT': int(not is_metric),
       'SET_ME_X01_2': 1,
       'SET_ME_X01': 1,
-      "FCM_OFF": stock_hud["FCM_OFF"],
-      "FCM_OFF_2": stock_hud["FCM_OFF_2"],
-      "FCM_PROBLEM": stock_hud["FCM_PROBLEM"],
-      "ICONS": stock_hud["ICONS"],
+      "FCM_OFF": stock_acc_hud["FCM_OFF"],
+      "FCM_OFF_2": stock_acc_hud["FCM_OFF_2"],
+      "FCM_PROBLEM": stock_acc_hud["FCM_PROBLEM"],
+      "ICONS": stock_acc_hud["ICONS"],
     }
     commands.append(packer.make_can_msg("ACC_HUD", bus_pt, acc_hud_values, idx))
 
+  # Only passthrough RDM hud if it's enabled at the physical switch. Stock LKAS activates RDM without notifying the user, so ignore it
   lkas_hud_values = {
-    'SET_ME_X41': 0x41,
-    'SET_ME_X48': 0x48,
+    'RDM_OFF': stock_lkas_hud["RDM_OFF"],
+    'RDM_ON': stock_lkas_hud["RDM_ON"],
+    'RDM_ON_2': stock_lkas_hud["RDM_ON_2"],  # reflects system state only after button press on nidec
+    'RDM_HUD': stock_lkas_hud["RDM_HUD"] or hud.ldw if stock_lkas_hud["RDM_ON"] else hud.ldw,  # this triggers the hud warning
+    'RDM_HUD_2': stock_lkas_hud["RDM_HUD_2"] if stock_lkas_hud["RDM_ON"] else 0,  # secondary bit for RDM. isn't always set by the car
+    'LKAS_READY': 1,
     'STEERING_REQUIRED': hud.steer_required,
     'SOLID_LANES': hud.lanes,
     'BEEP': 0,
