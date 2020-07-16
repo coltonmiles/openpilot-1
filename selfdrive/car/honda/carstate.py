@@ -249,16 +249,16 @@ class CarState(CarStateBase):
       self.park_brake = 0  # TODO
       main_on = cp.vl["SCM_BUTTONS"]['MAIN_ON']
 
-    if self.CP.transmissionType != car.CarParams.TransmissionType.manual:
+    if self.CP.transmissionType == car.CarParams.TransmissionType.automatic:
       gear = int(cp.vl["GEARBOX"]['GEAR_SHIFTER'])
       ret.gearShifter = self.parse_gear_shifter(self.shifter_values.get(gear, None))
     else:
       if cp.vl["GAS_PEDAL_2"]['NEUTRAL']:
-        ret.gearShifter = "neutral"
-      elif cp.vl["GAS_PEDAL_2"]['REVERSE']:
-        ret.gearShifter = "reverse"
+        ret.gearShifter = 'neutral'
+      elif cp.vl["SCM_FEEDBACK"]['REVERSE']:
+        ret.gearShifter = 'reverse'
       else:
-        ret.gearShifter = "drive"
+        ret.gearShifter = 'drive'
 
     self.pedal_gas = cp.vl["POWERTRAIN_DATA"]['PEDAL_GAS']
     # crv doesn't include cruise control
