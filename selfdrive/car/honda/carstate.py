@@ -109,8 +109,8 @@ def get_can_signals(CP):
       signals += [
       ("NEUTRAL", "GAS_PEDAL_2", 0),
       ("REVERSE", "SCM_FEEDBACK", 0),
-      ("CLUTCH_PRESSED_ACC", "GAS_PEDAL_2", 1),
-      ("CLUTCH_PRESSED_MAIN", "GAS_PEDAL_2", 1)]
+      ("CLUTCH_ACC", "GAS_PEDAL_2", 1),
+      ("CLUTCH_MAIN", "GAS_PEDAL_2", 1)]
 
   if CP.carFingerprint in (CAR.ACCORD, CAR.ACCORD_15, CAR.ACCORDH, CAR.CIVIC_BOSCH, CAR.CIVIC_BOSCH_DIESEL, CAR.CRV_HYBRID, CAR.INSIGHT):
     signals += [("DRIVERS_DOOR_OPEN", "SCM_FEEDBACK", 1)]
@@ -324,7 +324,7 @@ class CarState(CarStateBase):
         ret.brakePressed = True
 
     if self.CP.transmissionType == car.CarParams.TransmissionType.manual:
-      ret.clutchPressed = cp.vl["GAS_PEDAL_2"]["CLUTCH_PRESSED_MAIN"] or cp.vl["GAS_PEDAL_2"]["CLUTCH_PRESSED_ACC"]
+      ret.clutchPressed = cp.vl["GAS_PEDAL_2"]["CLUTCH_MAIN"] or cp.vl["GAS_PEDAL_2"]["CLUTCH_ACC"]
     else:
       ret.clutchPressed = False
 
