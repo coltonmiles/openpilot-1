@@ -15,6 +15,8 @@ A_ACC_MAX = max(_A_CRUISE_MAX_V_FOLLOWING)
 
 ButtonType = car.CarState.ButtonEvent.Type
 EventName = car.CarEvent.EventName
+TransmissionType = car.CarParams.TransmissionType
+
 
 def compute_gb_honda(accel, speed):
   creep_brake = 0.0
@@ -422,7 +424,7 @@ class CarInterface(CarInterfaceBase):
     ret.steerLimitTimer = 0.8
 
     # TODO: get the GEARBOX id from the dbc instead a list of frame IDs from values.py
-    ret.transmissionType = car.CarParams.TransmissionType.automatic if any(msg in GEARBOX_MSG for msg in fingerprint[pt_bus]) else car.CarParams.TransmissionType.manual
+    ret.transmissionType = TransmissionType.automatic if any(msg in GEARBOX_MSG for msg in fingerprint[pt_bus]) else TransmissionType.manual
 
     return ret
 

@@ -7,6 +7,9 @@ from selfdrive.config import Conversions as CV
 from selfdrive.car.interfaces import CarStateBase
 from selfdrive.car.honda.values import CAR, DBC, STEER_THRESHOLD, SPEED_FACTOR, HONDA_BOSCH
 
+TransmissionType = car.CarParams.TransmissionType
+
+
 def calc_cruise_offset(offset, speed):
   # euristic formula so that speed is controlled to ~ 0.3m/s below pid_speed
   # constraints to solve for _K0, _K1, _K2 are:
@@ -67,7 +70,7 @@ def get_can_signals(CP):
       ("SCM_FEEDBACK", 10),
       ("SCM_BUTTONS", 25),
     ]
-  if CP.transmissionType == car.CarParams.TransmissionType.automatic:
+  if CP.transmissionType == TransmissionType.automatic:
       if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL):
         checks += [
           ("GEARBOX", 50),
@@ -101,7 +104,7 @@ def get_can_signals(CP):
     else:
       checks += [("CRUISE_PARAMS", 50)]
 
-  if CP.transmissionType == car.CarParams.TransmissionType.automatic:
+  if CP.transmissionType == TransmissionType.automatic:
     signals += [
         ("GEAR", "GEARBOX", 0),
         ("GEAR_SHIFTER", "GEARBOX", 0)]
@@ -171,7 +174,7 @@ class CarState(CarStateBase):
   def __init__(self, CP):
     super().__init__(CP)
     can_define = CANDefine(DBC[CP.carFingerprint]['pt'])
-    if CP.transmissionType == car.CarParams.TransmissionType.automatic:
+    if CP.transmissionType == TransmissionType.automatic:
       self.shifter_values = can_define.dv["GEARBOX"]["GEAR_SHIFTER"]
     self.steer_status_values = defaultdict(lambda: "UNKNOWN", can_define.dv["STEER_STATUS"]["STEER_STATUS"])
 
@@ -255,7 +258,7 @@ class CarState(CarStateBase):
       self.park_brake = 0  # TODO
       main_on = cp.vl["SCM_BUTTONS"]['MAIN_ON']
 
-    if self.CP.transmissionType == car.CarParams.TransmissionType.automatic:
+    if self.CP.transmissionType == TransmissionType.automatic:
       gear = int(cp.vl["GEARBOX"]['GEAR_SHIFTER'])
       ret.gearShifter = self.parse_gear_shifter(self.shifter_values.get(gear, None))
     else:
@@ -323,7 +326,7 @@ class CarState(CarStateBase):
       if ret.brake > 0.05:
         ret.brakePressed = True
 
-    if self.CP.transmissionType == car.CarParams.TransmissionType.manual:
+    if self.CP.transmissionType == TransmissionType.manual:
       ret.clutchPressed = bool(cp.vl["GAS_PEDAL_2"]["CLUTCH_MAIN"] or cp.vl["GAS_PEDAL_2"]["CLUTCH_ACC"])
     else:
       ret.clutchPressed = False
