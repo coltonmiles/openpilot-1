@@ -67,15 +67,15 @@ def get_can_signals(CP):
       ("SCM_FEEDBACK", 10),
       ("SCM_BUTTONS", 25),
     ]
-
-  if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL):
-    checks += [
-      ("GEARBOX", 50),
-    ]
-  elif CP.transmissionType == car.CarParams.TransmissionType.automatic:
-    checks += [
-      ("GEARBOX", 100),
-    ]
+  if CP.transmissionType == car.CarParams.TransmissionType.automatic:
+      if CP.carFingerprint in (CAR.CRV_HYBRID, CAR.CIVIC_BOSCH_DIESEL):
+        checks += [
+          ("GEARBOX", 50),
+        ]
+      else:
+        checks += [
+          ("GEARBOX", 100),
+        ]
 
   if CP.radarOffCan:
     # Civic is only bosch to use the same brake message as other hondas.
