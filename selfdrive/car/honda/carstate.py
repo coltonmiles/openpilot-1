@@ -72,7 +72,7 @@ def get_can_signals(CP):
     checks += [
       ("GEARBOX", 50),
     ]
-  else:
+  else if CP.transmissionType == car.CarParams.TransmissionType.automatic:
     checks += [
       ("GEARBOX", 100),
     ]
