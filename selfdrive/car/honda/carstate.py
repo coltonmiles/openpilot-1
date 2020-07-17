@@ -324,7 +324,7 @@ class CarState(CarStateBase):
         ret.brakePressed = True
 
     if self.CP.transmissionType == car.CarParams.TransmissionType.manual:
-      ret.clutchPressed = bool(cp.vl["GAS_PEDAL_2"]["CLUTCH_MAIN"]) or bool(cp.vl["GAS_PEDAL_2"]["CLUTCH_ACC"])
+      ret.clutchPressed = bool(cp.vl["GAS_PEDAL_2"]["CLUTCH_MAIN"] or cp.vl["GAS_PEDAL_2"]["CLUTCH_ACC"])
     else:
       ret.clutchPressed = False
 
