@@ -259,9 +259,9 @@ class CarState(CarStateBase):
       gear = int(cp.vl["GEARBOX"]['GEAR_SHIFTER'])
       ret.gearShifter = self.parse_gear_shifter(self.shifter_values.get(gear, None))
     else:
-      if cp.vl["GAS_PEDAL_2"]['NEUTRAL']:
+      if bool(cp.vl["GAS_PEDAL_2"]['NEUTRAL']):
         ret.gearShifter = 'neutral'
-      elif cp.vl["SCM_FEEDBACK"]['REVERSE']:
+      elif bool(cp.vl["SCM_FEEDBACK"]['REVERSE']):
         ret.gearShifter = 'reverse'
       else:
         ret.gearShifter = 'drive'
